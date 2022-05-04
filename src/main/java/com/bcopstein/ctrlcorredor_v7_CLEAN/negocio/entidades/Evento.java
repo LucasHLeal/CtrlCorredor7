@@ -1,6 +1,10 @@
 package com.bcopstein.ctrlcorredor_v7_CLEAN.negocio.entidades;
+import javax.persistence.*;
 
+@Entity
 public class Evento {
+    
+    @Id
     private int id;
     private String nome;
     // Data do evento
@@ -14,6 +18,7 @@ public class Evento {
     private int minutos;
     private int segundos;
     
+
     public Evento(int id,String nome, int dia, int mes, int ano, int distancia, int horas, int minutos, int segundos) {
         this.id = id;
         this.nome = nome;
@@ -25,6 +30,8 @@ public class Evento {
         this.minutos = minutos;
         this.segundos = segundos;
     }
+
+    protected Evento() {}
 
     public int getId() {
         return id;

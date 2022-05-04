@@ -1,25 +1,17 @@
 package com.bcopstein.ctrlcorredor_v7_CLEAN.adaptadores.repositorios;
-
 import java.util.List;
-
 import com.bcopstein.ctrlcorredor_v7_CLEAN.negocio.entidades.Evento;
 import com.bcopstein.ctrlcorredor_v7_CLEAN.negocio.repositorios.IEventoRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventoRepository implements IEventoRepository{
-    private JdbcTemplate jdbcTemplate;
+    private EventoBD eventoBD;
 
     @Autowired
-    public EventoRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;  
-        this.jdbcTemplate.execute("DROP TABLE eventos IF EXISTS");
-        this.jdbcTemplate.execute("CREATE TABLE eventos("
-                + "id int, nome VARCHAR(255), dia int, mes int, ano int, distancia int, horas int, minutos int, segundos int,PRIMARY KEY(id))");
-        // Insere eventos
+    public EventoRepository(EventoBD eventoBD) {
+        this.eventoBD = eventoBD;
         cadastra(new Evento(1,"Poa Day Run",22,5,2019,5,0,35,32));
         cadastra(new Evento(2,"Poa Night Run",12,6,2019,5,0,31,10));
         cadastra(new Evento(3,"Winter Day Run",9,7,2019,5,0,29,17));
@@ -27,18 +19,11 @@ public class EventoRepository implements IEventoRepository{
     }  
 
     public List<Evento> todos() {
-        List<Evento> resp = this.jdbcTemplate.query("SELECT * from eventos",
-                (rs, rowNum) -> new Evento(rs.getInt("id"), rs.getString("nome"), rs.getInt("dia"), rs.getInt("mes"),
-                        rs.getInt("ano"), rs.getInt("distancia"), rs.getInt("horas"), rs.getInt("minutos"),
-                        rs.getInt("segundos")));
-        return resp;
+        return eventoBD.findAll();
     }
 
     public boolean cadastra(Evento evento){
-        this.jdbcTemplate.update(
-            "INSERT INTO eventos(id,nome,dia,mes,ano,distancia,horas,minutos,segundos) VALUES (?,?,?,?,?,?,?,?,?)",
-            evento.getId(), evento.getNome(), evento.getDia(), evento.getMes(), evento.getAno(),
-            evento.getDistancia(), evento.getHoras(), evento.getMinutos(), evento.getSegundos());
-        return true;
+        Evento bdEvento = eventoBD.save(evento);
+        return bdEvento != null ? true : false;
     }
 }

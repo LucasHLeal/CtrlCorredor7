@@ -1,10 +1,14 @@
 package com.bcopstein.ctrlcorredor_v7_CLEAN.negocio.entidades;
+import javax.persistence.*;
 
+@Entity
 public class Corredor {
+    @Id
     private String cpf;
     private String nome;
     private int diaDn,mesDn,anoDn;
     private String genero;
+
 
     public Corredor(String cpf, String nome, int diaDn,int mesDn,int anoDn, String genero) {
         this.cpf = cpf;
@@ -14,6 +18,8 @@ public class Corredor {
         this.anoDn = anoDn;
         this.genero = genero;
     }
+
+    protected Corredor() {}
 
     public String getCpf() {
         return cpf;
