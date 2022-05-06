@@ -8,30 +8,48 @@ public class Evento {
     private int id;
     private String nome;
     // Data do evento
-    private int dia;
-    private int mes;
-    private int ano;
+    @Embedded
+    private Data data;
     // Distancia percorrida
     private int distancia; // metros
     // Tempo que o corredor levou para percorrer a distancia
-    private int horas;
-    private int minutos;
-    private int segundos;
+    @Embedded
+    private Tempo tempo;
     
 
-    public Evento(int id,String nome, int dia, int mes, int ano, int distancia, int horas, int minutos, int segundos) {
+    public Evento(int id,String nome, int distancia, Data data, Tempo tempo) {
         this.id = id;
         this.nome = nome;
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
         this.distancia = distancia;
-        this.horas = horas;
-        this.minutos = minutos;
-        this.segundos = segundos;
+        this.data = data;
+        this.tempo = tempo;
     }
 
     protected Evento() {}
+
+    public int getDia() {
+        return this.data.getDia();
+    }
+
+    public int getMes() {
+        return this.data.getMes();
+    }
+
+    public int getAno() {
+        return this.data.getAno();
+    }
+
+    public int getHoras() {
+        return this.tempo.getHoras();
+    }
+
+    public int getMinutos() {
+        return this.tempo.getMinutos();
+    }
+
+    public int getSegundos() {
+        return this.tempo.getSegundos();
+    }
 
     public int getId() {
         return id;
@@ -41,37 +59,17 @@ public class Evento {
         return nome;
     }
 
-    public int getDia() {
-        return dia;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public int getAno() {
-        return ano;
-    }
+    
 
     public int getDistancia() {
         return distancia;
     }
 
-    public int getHoras() {
-        return horas;
-    }
-
-    public int getMinutos() {
-        return minutos;
-    }
-
-    public int getSegundos() {
-        return segundos;
-    }
+    
 
     @Override
     public String toString() {
-        return "Evento [ano=" + ano + ", dia=" + dia + ", distancia=" + distancia + ", horas=" + horas + ", id=" + id
-                + ", mes=" + mes + ", minutos=" + minutos + ", nome=" + nome + ", segundos=" + segundos + "]";
+        return "Evento [ano=" + data.getAno() + ", dia=" + data.getDia() + ", distancia=" + distancia + ", horas=" + tempo.getHoras() + ", id=" + id
+                + ", mes=" + data.getMes() + ", minutos=" + tempo.getMinutos() + ", nome=" + nome + ", segundos=" + tempo.getSegundos() + "]";
     }
 }

@@ -1,8 +1,5 @@
 package com.bcopstein.ctrlcorredor_v7_CLEAN.adaptadores.repositorios;
 import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.*;
 
 import com.bcopstein.ctrlcorredor_v7_CLEAN.negocio.entidades.Corredor;
 
